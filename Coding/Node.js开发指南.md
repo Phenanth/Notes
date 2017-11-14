@@ -415,4 +415,25 @@ options的常用参数如下：
 
 ## 第五章
 
+5.1中有部分网页开发历程、Express框架提供的相对Node.js本身提供的更加高层的接口。
+
+比起之前的复杂操作，用Express加载`express.bodyParser()`能够通过`req.body`获取POST的数据。
+
+全局安装`express`解决方法：多加一句
+`sudo npm install express-generator -g`
+
+在书中所属步骤完成后附加一个函数
+```
+app.listen(3000, function(){
+    console.log('Express started on 'http://localhost:3000;'');
+});
+```
+即可看到Express欢迎页面。
+
+> supervisor自动重启 3.1.3节 生产环境部署Node.js服务器 6.3节
+
+
+关于工程结构，实际上因为版本的更新，工程结构已经和pdf内大有不同，这里暂且不论。
+
+
 **not started yet.**
