@@ -1,5 +1,5 @@
 # Notes
-Some notes for reading coding books.
+一个用于存放所有md格式学习笔记的仓库。.
 
 ## Coding
 
