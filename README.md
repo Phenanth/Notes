@@ -3,7 +3,7 @@
 
 ## Coding
 
-- Node.js开发指南 （第四章结束）
+- Node.js开发指南 （第五章第三节结束）
 - Node与Express开发 （第七章结束）
 - MongoDB权威指南 （未开始）
 

@@ -1,5 +1,4 @@
-
-de.js开发指南读书笔记
+# node.js开发指南读书笔记
 
 
 参考资料：
@@ -64,9 +63,9 @@ app.js:
 var http = require('http');
 
 http.createServer(function(req, res){
-	res.writeHead(200, {'Content-Type': 'text/html'});
-	res.write('<h1>Node.js</h1>');
-	res.end('<p>Hello World</p>');
+    res.writeHead(200, {'Content-Type': 'text/html'});
+    res.write('<h1>Node.js</h1>');
+    res.end('<p>Hello World</p>');
 }).listen(3000);
 console.log("HTTP server is listening at port 3000...");
 ```
@@ -432,8 +431,99 @@ app.listen(3000, function(){
 
 > supervisor自动重启 3.1.3节 生产环境部署Node.js服务器 6.3节
 
+关于工程结构，实际上因为版本的更新，工程结构已经和pdf内大有不同，但总体上来说还是`index.js`为网站总接口点，`routes/index.js`是网站路由，`layout.jade`是网站总视图。
 
-关于工程结构，实际上因为版本的更新，工程结构已经和pdf内大有不同，这里暂且不论。
+该网站教程是使用jade模版的，会省去尖括号，如果用编辑器推荐安装jade语法包。
 
+96-98页完整叙述了MVC架构在服务器接收到GET访问请求到返回页面内容之中发生了的事情，不熟悉的话可以仔细阅读。
 
-**not started yet.**
+### 创建新路由
+
+express高于4的版本的写法：
+
+于`app.js`中添加
+```
+var routes = require('./routes/index');
+
+app.use('/', routes);
+```
+
+`./routes/index.js`:
+```
+var express = require('express');
+var router = express.Router();
+
+/* GET home page. */
+router.get('/', function(req, res, next) {
+  res.render('index', { title: 'Express' });
+});
+
+router.get('/hello', function(req, res, next) {
+    res.send('The local time is: ' + new Date().toString());
+});
+
+router.get('/users', function(req, res, next) {
+  res.send('respond with a resource');
+});
+
+module.exports = router;
+```
+
+`node app.js`就可以在`http://localhost:3000/users`和`http://localhost:3000/hello`看到函数中对应的内容了。
+
+next指的是将控制权转让给之后同样的规则，以免后者被屏蔽。这个工具可以用于实现中间件和提高代码复用性。
+
+`index.js`:
+```
+var users = {
+  'someone' : {
+    name : 'phenan',
+    website : 'https://github.com/Phenanth'
+  }
+}
+
+app.all('/user/:username', function(req, res, next) {
+  if (users[req.params.username]) {
+    next();
+  }  else {
+    next(new Error(req.params.username + ' does not exist.'));
+  }
+});
+
+app.get('/user/:username', function(req, res) {
+  res.send(JSON.stringify(users[req.params.username]));
+});
+
+app.put('/user/:username', function(req, res) {
+  res.send('Done');
+});
+```
+
+### 路径匹配
+
+实例：
+
+于`app.js`中添加如下语句：
+```
+app.get('/user/:username', function(req, res) {
+  res.send('user:' + req.params.username);
+});
+```
+
+访问`http://localhost:3000/user/someone`即可得到页面内容。
+
+访问规则会被编译为正则表达式，路径参数通过`req.params`访问，如果直接使用正则表达式匹配路径的话需要使用`req.params[1]`等方式访问参数。
+
+express支持`表征状态转移(Representational State Transfer)`风格的请求方式，绑定以下函数：
+
+- app.get(path, callback) （**获取**）
+- app.post(path, callback)  （**新增**）
+- app.put(path,callback)  （**更新**）
+- app.delete(path,callback)  （**删除**）
+- app.patch(path,callback)
+- app.trace(path,callback)
+- app.connect(path,callback)
+- app.options(path,callback)
+- app.all(path,callback)  （所有方法）
+
+*以下是模版引擎*
