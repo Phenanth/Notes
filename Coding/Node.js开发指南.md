@@ -526,4 +526,122 @@ express支持`表征状态转移(Representational State Transfer)`风格的请�
 - app.options(path,callback)
 - app.all(path,callback)  （所有方法）
 
-*以下是模版引擎*
+### 模版引擎（视图）
+
+过去将逻辑集成到页面模版内部的做法由于难以维护、学习困难、功能划分不明显等问题后期显出有些疲软的态势，这里引入MVC架构中模版概念：在功能划分上它严格 于视图部分，因此功能以 生成 HTML 页面为核心，不会引入过多的编程语言的功能。
+
+ejs模版引擎的标签系统：
+- <% code %> js代码
+- <%= code %> HTML代替特殊字符后的内容
+- <%- code %> 原HTML内容
+
+指定页面布局：
+
+```
+function(req, res) {
+    res.render('userlist', {
+        title: 'User List Page',
+        layout: 'layout'
+    });
+};
+```
+
+`layout.ejs`:
+```
+<!DOCTYPE html>
+<html>
+<head>
+  <h1><%= title %></h1>
+  <link rel="stylesheet" href="/stylesheets/style.css" />
+</head>
+
+<body>
+    <%- body %>
+</body>
+
+</html>
+```
+
+迭代显示：
+
+`app.js`:
+```
+app.get('/list', function(req, res) {
+  res.render('list', {
+    title: 'List',
+    items: [1998, 'phenan', 'express', 'Node.js']
+  });
+});
+```
+
+`/views/list.ejs`:
+```
+<ul><%- partial('listitem', items) %></ul>
+```
+
+`/views/listitem.ejs`:
+```
+<li><%= listitem %></li>
+```
+
+> 实际访问`http://localhost:3000/list`未得到应有显示内容，有待查询官方文档4.x版本以上的partial函数用法。
+
+视图助手：动态用于`req`和`res`的访问，静态用于此外的任何类型对象
+
+`app.js`:
+
+```
+var util = require('util');
+
+app.helpers({ //错误用法
+  inspect: function(obj) {
+    return util.insepect(obj, true);
+  }
+});
+
+app.dynamicHelpers({
+  headers: function(req, res) {
+    return req.headers;
+  }
+});
+
+app.get('/helper', function(req, res) {
+  res.render('helper', {
+    title: 'Helpers'
+  });
+});
+```
+
+`helper.ejs`:
+```
+<%= inspect(headers) %>
+```
+
+> app.helpers()无此函数，有待更新版本新用法。视图助手将用于后文`session`部分
+
+**有待修复版本原因引起的错误**
+
+其后在`app.js`中增加了网站应有的路由关系，并使用`bootstrap`实现页面设计（CSS与HTML）部分。
+
+> 存在因版本问题未成功引入`bootstrap`与`jquery`的问题，且并未使用`navbar`以及`footer`等ID与标签。
+
+### NoSQL - MongoDB
+
+讲述了关系型数据库与非关系型数据库的特点（p115），以及MongoDB中文档的属性。
+
+```
+{ "_id" : ObjectId( "4f7fe8432b4a1077a7c551e8" ), "uid" : 2004,
+"username" : "byvoid",
+"net9" : { "nickname" : "BYVoid",
+          "surname" : "Kuo",
+          "givenname" : "Carbo",
+          "fullname" : "Carbo Kuo",
+          "emails" : [ "byvoid@byvoid.com", "byvoid.kcp@gmail.com" ],
+          "website" : "http://www.byvoid.com",
+          "address" : "Zijing 2#, Tsinghua University" }
+      }
+```
+MongoDB的数据格式是JSON
+
+
+**以下是会话**

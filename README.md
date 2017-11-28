@@ -3,7 +3,7 @@
 
 ## Coding
 
-- Node.js开发指南 （第五章第三节结束）
+- Node.js开发指南 （第五章第六节第一小节结束）
 - Node与Express开发 （第七章结束）
 - MongoDB权威指南 （未开始）
 
@@ -12,3 +12,4 @@
 - Mac内置Python配置MySQL
 - MySQL基本指令
 - Python爬虫合集（个人）
+- Mac下配置MongoDB
