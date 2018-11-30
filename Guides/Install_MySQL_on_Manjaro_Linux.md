@@ -1,4 +1,4 @@
-nstall MySQL on Manjaro Linux
+# Install MySQL on Manjaro Linux
 
 ## Failure in installation
 
@@ -42,5 +42,3 @@ insert into positions_comp select * from positions;
 alter table positions rename positions_old;
 alter table positions_comp rename positions;
 ```
-
-

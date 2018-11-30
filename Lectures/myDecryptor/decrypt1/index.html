@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>凯撒密码</title>
+	<link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+	<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+	<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="index.js"></script>
+	<style type="text/css">
+		body {
+			width: 100%;
+			padding: 10px;
+		}
+		textarea {
+			height: 125px;
+			width: 350px;
+		}
+		body {
+			display: flex;
+			justify-content: center;
+		}
+		a {
+			color: black;
+		}
+		a:hover {
+			color: black;
+			text-decoration: none;
+		}
+		.input {
+			display: flex;
+			flex-direction: row;
+		}
+		.file {
+			margin-left: 20px;
+		}
+		#text3 {
+			height: 305px;
+		}
+		#key {
+			width: 350px;
+		}
+		.control {
+			margin-top: 20px;
+			display: flex;
+			justify-content: center;
+		}
+		.right-float {
+			float: right;
+		}
+		.right-float:hover {
+			cursor: pointer;
+		}
+		#btn-encrept, #btn-decrept, #btn-reset {
+			margin: 5px;
+		}
+	</style>
+</head>
+<body>
+	<div class="wrapper">
+		<div>
+			<h1>凯撒密码</h1>
+			<a class="right-float" href="../index.html" >回到首页</a>
+		</div>
+		<hr>
+		<div class="input">
+			<div class="text">
+				<h2>明文</h2>
+				<textarea id="text1"></textarea>
+				<h2>密钥</h2>
+				<input type="input" name="key" id="key">
+				<h2>密文</h2>
+				<textarea id="text2"></textarea>
+			</div>
+			<div class="file">
+				<h2>文件</h2>
+				<input class="btn btn-default" type="file" name="file" id="file" onchange="handleFile(this.files)">
+				<h2>文件加密/解密结果</h2>
+				<textarea id="text3"></textarea>
+			</div>
+		</div>
+		<hr>
+		<div class="control">
+			<button class="btn btn-default" id="btn-encrept">加密</button>
+			<button class="btn btn-default" id="btn-decrept">解密</button>
+			<button class="btn btn-default" id="btn-reset">重置</button>
+		</div>
+	</div>
+</body>
+</html>

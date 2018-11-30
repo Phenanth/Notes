@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>RSA加密解密</title>
+	<link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+	<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+	<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="./rsa/jsbn.js"></script>
+	<script type="text/javascript" src="./rsa/jsbn2.js"></script>
+	<script type="text/javascript" src="./rsa/prng4.js"></script>
+	<script type="text/javascript" src="./rsa/rng.js"></script>
+	<script type="text/javascript" src="./rsa/rsa.js"></script>
+	<script type="text/javascript" src="./rsa/rsa2.js"></script>
+	<script type="text/javascript" src="index.js"></script>
+	<style type="text/css">
+		body {
+			width: 100%;
+			padding: 10px;
+		}
+		textarea#plaintext, textarea#ciphertext, textarea#decrypted {
+			height: 105px;
+			width: 350px;
+		}
+		body {
+			display: flex;
+			justify-content: center;
+		}
+		a {
+			color: black;
+		}
+		a:hover {
+			color: black;
+			text-decoration: none;
+		}
+		.input {
+			display: flex;
+			flex-direction: row;
+		}
+		.private1, .private2 {
+			display: flex;
+			flex-direction: column;
+			margin-left: 20px;
+		}
+		.private2 {
+			margin-top: 100px;
+		}
+		.control {
+			margin-top: 20px;
+			display: flex;
+			justify-content: center;
+		}
+		.right-float {
+			float: right;
+		}
+		.right-float:hover {
+			cursor: pointer;
+		}
+		#btn-encrypt, #btn-decrypt, #btn-reset {
+			margin: 5px;
+		}
+	</style>
+</head>
+<body>
+	<div class="wrapper" name="rsatest">
+		<div>
+			<h1>RSA加密解密</h1>
+			<a class="right-float" href="../index.html" >回到首页</a>
+		</div>
+		<hr>
+		<div class="input">
+			<div class="text">
+				<form obSubmit='do_encrypt();return false'>
+					<h2>明文</h2>
+					<textarea id="plaintext" name="plaintext" type="text" value="test"></textarea>
+					<!-- <h2>密钥</h2>
+					<input type="input" name="key" id="key"> -->
+					<h2>密文</h2>
+					<textarea id="ciphertext" name="ciphertext"></textarea>
+					<h2>解密结果</h2>
+					<textarea id="decrypted" name="decrypted"></textarea>
+				</form>
+			</div>
+			<!-- <div class="file">
+				<h2>文件</h2>
+				<input class="btn btn-default" type="file" name="file" id="file" onchange="handleFile(this.files)">
+				<h2>文件加密/解密结果</h2>
+				<textarea id="text3" name="decrypted"></textarea>
+			</div> -->
+			<div class="private1">
+				<h2>RSA密钥</h2>
+				<p>
+					<input class="btn btn-default" type="button" value="1024 bit" onClick="set_1024f4();">
+					<input class="btn btn-default" type="button" value="1024 bit (e=3)" onClick="set_1024e3();">
+					<input class="btn btn-default" type="button" value="512 bit" onClick="set_512f4();">
+					<input class="btn btn-default" type="button" value="512 bit (e=3)" onClick="set_512e3();">
+					&nbsp; <input class="btn btn-primary" type="button" value="生成" onClick="do_genrsa();">
+					bits = <input id="bits" name="bits" type="text" value="512" size=10>
+				</p>
+				<h4>N (HEX)</h4>
+				<textarea id="n" name="n" type="text" cols="50" rows="2"></textarea>
+				<h4>E (HEX, F4 = 0x10001)</h4>
+				<textarea id="e" name="e" type="text" cols="50" rows="2"></textarea>
+				<h4>D (HEX)</h4>
+				<textarea id="d" name="d" type="text" cols="50" rows="2"></textarea>
+				<h4>P (HEX)</h4>
+				<textarea id="p" name="p" type="text" cols="50" rows="2"></textarea>
+			</div>
+			<div class="private2">
+				<h4>Q (HEX)</h4>
+				<textarea id="q" name="q" type="text" cols="50" rows="2"></textarea>
+				<h4>D mod (P-1) (HEX)</h4>
+				<textarea id="dmp1" name="dmp1" type="text" cols="50" rows="2"></textarea>
+				<h4>D mod (Q-1) (HEX)</h4>
+				<textarea id="dmq1" name="dmq1" type="text" cols="50" rows="2"></textarea>
+				<h4>1/Q mod P (HEX)</h4>
+				<textarea name="coeff" id="coeff" cols="50" rows="2"></textarea>
+			</div>
+		</div>
+		<hr>
+		<div class="control">
+			<button class="btn btn-default" id="btn-encrypt" value="encrypt">加密</button>
+			<button class="btn btn-default" id="btn-decrypt" value="decrypt">解密</button>
+			<button class="btn btn-default" id="btn-reset">重置</button>
+		</div>
+	</div>
+</body>
+</html>

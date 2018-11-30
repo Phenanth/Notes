@@ -1,4 +1,4 @@
-# MySQL Basics
+# MySQL Basic Commands
 
 ## Settings
 *Not finished yet.*

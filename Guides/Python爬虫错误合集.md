@@ -10,8 +10,6 @@
 from (module) import (module)
 ```
 
-
-
 ## ValueError
 
 
@@ -32,8 +30,9 @@ pass
 
 ## AttributeError
 
-- ‘lxml.etree._Element’ object has no attribute ‘Xpath’
-  解决：（*这个解决非常蠢。是xpath而不是Xpath*）
+- `'lxml.etree._Element' object has no attribute 'Xpath'`
+  解决：（*这个解决非常蠢。 是xpath而不是Xpath*）
+
 ```
 content = dom.xpath('')
 ```
@@ -48,6 +47,7 @@ with open(file, 'r+') as fd:
 ```
 
 ## UnicodeEncodeError
+
 遇到gbk编码无法编码字符都可以使用
 ```
 gbkTypeStr = unicodeTypeStr.encode(“GBK“, ‘ignore’);
@@ -71,7 +71,6 @@ string.replace(u'\xa0', u' ')
 string.replace(u'\u200b',u'')
 ```
 
-
 ## MySQLError
 
 - Can’t initialize character set utf-8
@@ -79,7 +78,6 @@ string.replace(u'\u200b',u'')
 ```
 conn = MySQLdb.connect(host='localhost', user='root', passwd='', port=3306, charset='utf8')
 ```
-
 
 # 逻辑错误
 
@@ -124,4 +122,4 @@ jparty = 'test'
 jnumber = 'test' 
 jlevel = 'test'
 ```
-  备注：*这个玩意花了我接近两个小时去排查，一定不能忘记初始化数据*
+  备注：*这个问题花了我接近两个小时去排查，一定不能忘记初始化数据*
